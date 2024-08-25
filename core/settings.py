@@ -44,7 +44,13 @@ INSTALLED_APPS = [
     "django_extensions",
 ]
 
-INSTALLED_EXTENSIONS = ["users", "wallets", "stocks", "workbooks", "stock_market"]
+INSTALLED_EXTENSIONS = [
+    "users",
+    "wallets",
+    "stocks",
+    "workbooks",
+    "stock_market",
+]
 
 INSTALLED_APPS += INSTALLED_EXTENSIONS
 
