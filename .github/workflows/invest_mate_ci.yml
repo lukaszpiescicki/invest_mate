@@ -45,7 +45,6 @@ jobs:
         poetry install
     - name: Run Tests
       run: |
-        cd src
         poetry run coverage run manage.py test
         poetry run coverage report
         poetry run coverage xml
