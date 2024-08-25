@@ -20,6 +20,10 @@ factory-boy = "^3.3.1"
 django-debug-toolbar = "^4.4.6"
 django-coverage = "^1.2.4"
 pre-commit = "^3.8.0"
+bandit = "^1.7.9"
+ruff = "^0.6.2"
+safety = "^3.2.6"
+coverage = "^7.6.1"
 
 [build-system]
 requires = ["poetry-core"]
