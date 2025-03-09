@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12pt;
+            margin: 30px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        p {
+            font-size: 12pt;
+            margin: 5px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+        td {
+            font-size: 11pt;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 24pt;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 14pt;
+        }
+
+        .footer {
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 10pt;
+            padding: 10px;
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{ user.username }}'s Portfolio</h1>
+        <p>As of: {{ total_current_value.date }}</p>
+    </div>
+
+    <p><strong>Wallet Balance:</strong> ${{ wallet_balance }}</p>
+    <p><strong>Total Investments:</strong> ${{ total_investments }}</p>
+    <p><strong>Total Current Value:</strong> ${{ total_current_value }}</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ticker</th>
+                <th>Quantity</th>
+                <th>Average Purchase Price</th>
+                <th>Current Price</th>
+                <th>Current Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in user_stocks %}
+            <tr>
+                <td>{{ stock.stock.ticker }}</td>
+                <td>{{ stock.total_quantity }}</td>
+                <td>${{ stock.average_purchase_price }}</td>
+                <td>${{ stock.stock.close_price }}</td>
+                <td>${{ stock.current_value }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No stocks in your portfolio.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
