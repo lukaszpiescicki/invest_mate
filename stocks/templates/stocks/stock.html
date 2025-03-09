@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}
+    Stock
+{% endblock title %}
+<body id="page-top">
+{% block content %}
+
+    <div id="wrapper">
+
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Stock Dashboard</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+            <hr class="sidebar-divider">
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <h1 class="h3 mb-0 text-gray-800">Stock Detail View</h1>
+                </nav>
+
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Stock Overview</h6>
+                                </div>
+                                <div class="card-body">
+                                    <h5>Company Name: {{ object.name }}</h5>
+                                    <p><strong>Symbol:</strong> {{ object.ticker }}</p>
+                                    <p><strong>Data from:</strong> {{ date }}</p>
+                                    <p><strong>Current Price:</strong> {{ close_price }}</p>
+                                    <p><strong>Opening Price:</strong> {{ open_price }}</p>
+                                    <p><strong>Daily High:</strong> {{ highest_price }}</p>
+                                    <p><strong>Daily Low:</strong> {{ lowest_price }}</p>
+                                    <p><strong>Market Cap:</strong> {{ object.market_cap }}</p>
+                                    <p><strong>Volume:</strong> {{ volume }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 mb-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Stock Trades</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form method="POST" action="{% url 'stock-transaction' stock.id %}">
+                                        {% csrf_token %}
+                                        <fieldset class="form-group">
+                                            {{ form|crispy }}
+                                        </fieldset>
+                                        <button type="submit" name="operation" value="buy" class="btn btn-primary">Buy
+                                        </button>
+                                        <button type="submit" name="operation" value="sell" class="btn btn-danger">
+                                            Sell
+                                        </button>
+                                    </form>
+                                    {% for message in messages %}
+                                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 mb-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Price Change (Last 7 Days)</h6>
+                                </div>
+                                <div class="chart-container">
+                                    {{ chart|safe }}
+                                </div>
+{#                                <div class="card-body">#}
+{#                                    <canvas id="priceChart"></canvas>#}
+{#                                </div>#}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 mb-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Additional Information</h6>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Description:</strong> {{ object.description }}</p>
+                                    <p><strong>Headquarters:</strong> {{ object.address1 }}, {{ object.city }}</p>
+                                    <p><strong>Website:</strong> <a href="https://www.apple.com"
+                                                                    target="_blank">{{ object.homepage }}</a></p>
+                                    <p><strong>Sector:</strong> {{ object.sector }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
