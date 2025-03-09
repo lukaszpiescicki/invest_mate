@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}
+    Add Article
+{% endblock title %}
+{% block head %}
+    Create New Article
+{% endblock head %}
+{% block content %}
+    }
+    <body id="page-top">
+    <div id="wrapper">
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <h1 class="h3 mb-0 text-gray-800">{{ article.title }}</h1>
+                </nav>
+                <div class="container-fluid">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Author: {{ article.author }}</h6>
+                            <p class="text-muted">Date published: {{ article.date_posted }}</p>
+                        </div>
+                        <div class="card-body">
+                            <p>{{ article.content|safe }}</p>
+                        </div>
+                    </div>
+                    <a href="{% url 'article-list' %}" class="btn btn-primary">Return &rarr;</a>
+                    <a href="{% url 'article-update' article.pk %}" class="btn btn-primary">Edit &rarr;</a>
+                    <a href="{% url 'article-delete' article.pk %}" class="btn btn-danger">Remove &rarr;</a>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+{% endblock content %}
