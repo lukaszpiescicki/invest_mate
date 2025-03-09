@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Payment Failed
+{% endblock title %}
+
+{% block content %}
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Content Row -->
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <!-- Failure Card -->
+                <div class="card shadow-lg">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-gray-800 text-center">Payment Failed</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="mb-4">Unfortunately, your payment could not be processed. Please try again.</p>
+                        <a href="{% url 'payment-home' %}" class="btn btn-danger btn-lg">
+                            <i class="fas fa-redo"></i> Try Again
+                        </a>
+                    </div>
+                    <div class="card-footer text-muted text-center">
+                        If the issue persists, contact support.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- End of Page Content -->
+</div>
+<!-- End of Wrapper -->
+{% endblock content %}

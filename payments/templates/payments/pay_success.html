@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Payment Success{% endblock title %}
+
+{% block content %}
+<div id="wrapper">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-gray-800 text-center">Payment Successful</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="mb-4">Thank you for your payment!</p>
+                        <p>Your wallet has been credited with <strong>${{ amount }}</strong>.</p>
+                        <p>Your updated wallet balance is <strong>${{ wallet_balance }}</strong>.</p>
+                        <a href="{% url 'payment-home' %}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-home"></i> Return to Homepage
+                        </a>
+                    </div>
+                    <div class="card-footer text-muted text-center">
+                        You will receive a confirmation email shortly.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
