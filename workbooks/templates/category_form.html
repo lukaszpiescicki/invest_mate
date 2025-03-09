@@ -1,0 +1,137 @@
+ChatGPT
+Powiedziałeś(-aś):
+make an html for createview based on startbootstrap-sb-admin-2-gh-pages and model class Quiz(models.Model):
+    title = models.CharField(max_length=200)
+    question = models.ForeignKey(Question, on_delete=models.DO_NOTHING)
+    answer = models.ForeignKey(Answer, on_delete=models.DO_NOTHING)
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING,
+        related_name="quiz",
+    )
+ChatGPT powiedział:
+Here’s an HTML form for the Quiz model’s CreateView, styled using StartBootstrap SB Admin 2. It follows the template structure of the admin panel and integrates Bootstrap styling for a clean form layout.
+
+Quiz Createview
+Explanation:
+Extends base.html: Assumes SB Admin 2's base template is used.
+Bootstrap classes: Styled using form-control, btn btn-primary, and card-based layout.
+Dropdowns for ForeignKeys: Populates question, answer, category, and author using context variables like questions, answers, categories, and users.
+CSRF Token: Protects against CSRF attacks.
+Navigation Buttons: "Create Quiz" to submit, "Cancel" to return to the quiz list.
+Let me know if you need modifications! 🚀
+
+
+
+
+
+
+Powiedziałeś(-aś):
+same request for this model class Category(models.Model):
+    text = models.CharField(max_length=200)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.DO_NOTHING,
+        related_name="music_notes",
+    )
+ChatGPT powiedział:
+Edytowano
+I've updated the form to match the Category model, allowing users to input a category name and select an author. Let me know if you need any modifications! 🚀
+
+
+
+
+
+
+
+
+
+
+Wyszukaj
+
+Rozumuj
+
+ChatGPT może popełniać błędy. Sprawdź ważne informacje.
+?
+ChatGPT mówi: I've updated the form to match the `Category` model, allowing users to input a category name and select an author. Let me know if you need any modifications! 🚀
+
+
+Quiz Createview
+
+
+
+
+
+
+Podgląd
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+{% extends 'base.html' %}  {# Ensure this extends SB Admin 2's base template #}
+{% block content %}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">Create New Category</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="id_text">Category Name</label>
+                    <input type="text" name="text" id="id_text" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_author">Author</label>
+                    <select name="author" id="id_author" class="form-control">
+                        {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create Category</button>
+                <a href="{% url 'category_list' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

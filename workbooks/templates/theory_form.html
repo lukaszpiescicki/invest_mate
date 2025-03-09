@@ -1,0 +1,43 @@
+{% extends 'base.html' %}  {# Ensure this extends SB Admin 2's base template #}
+{% block content %}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">Create New Theory</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="id_text">Theory Text</label>
+                    <textarea name="text" id="id_text" class="form-control" rows="6" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_category">Category</label>
+                    <select name="category" id="id_category" class="form-control">
+                        {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.text }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_author">Author</label>
+                    <select name="author" id="id_author" class="form-control">
+                        {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create Theory</button>
+                <a href="{% url 'theory_list' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
