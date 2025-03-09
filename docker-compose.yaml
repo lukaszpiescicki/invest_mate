@@ -1,0 +1,56 @@
+services:
+  invest-mate:
+    container_name: invest-mate
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      invest-mate-db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+  celery-worker:
+    build: .
+    container_name: celery-worker
+    command: celery -A core worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - invest-mate-db
+      - redis
+  celery-beat:
+    build: .
+    command: celery -A core beat --loglevel=info
+    container_name: celery-beat
+    volumes:
+      - .:/app
+    depends_on:
+      - invest-mate-db
+      - redis
+  redis:
+    image: redis:7.4.1
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  invest-mate-db:
+    image: postgres:17
+    container_name: invest-mate-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
+    env_file:
+      - .env
+    volumes:
+      - .:/data/postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-U", "postgres", "-d", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
