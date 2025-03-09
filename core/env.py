@@ -1,7 +1,10 @@
 import environ
-from django.core.management.utils import get_random_secret_key
 
 env = environ.Env(
     DEBUG=(bool, False),
-    SECRET_KEY=(str, get_random_secret_key()),
+    SECRET_KEY=(str, "no-safe-key"),
+    POLYGON_API_KEY=(str, None),
+    STRIPE_SECRET_KEY=(str, "no-safe-key"),
+    STRIPE_PUBLIC_KEY=(str, None),
+    STRIPE_WEBHOOK_SECRET_KEY=(str, None),
 )
