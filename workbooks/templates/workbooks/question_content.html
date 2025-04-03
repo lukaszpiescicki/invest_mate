@@ -1,0 +1,22 @@
+{% extends 'base.html' %}  {# Extends SB Admin 2's base template #}
+{% block content %}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">Question Details</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <h5><strong>Question:</strong> {{ question.text }}</h5>
+
+            <h5 class="mt-3"><strong>Category:</strong> {{ question.category.text }}</h5>
+
+            <h5><strong>Author:</strong> {{ question.author.username }}</h5>
+
+            <a href="{% url 'question-update' question.id %}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+            <a href="{% url 'question-list' %}" class="btn btn-secondary"><i class="fas fa-list"></i> Back to List</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

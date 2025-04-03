@@ -1,25 +1,66 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 {% load crispy_forms_tags %}
-
 {% block title %}
     Login
 {% endblock title %}
+{% block head %}
+    Login
+{% endblock head %}
 {% block content %}
-<div class="content-section">
-    <form method="POST">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Log In!</legend>
-            {{ form|crispy }}
-        </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Login</button>
+    <div class="container">
+        <!-- Outer Card -->
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <!-- Left Image Panel -->
+                    <div class="col-lg-5 d-none d-lg-block bg-login-image"></div>
+                    <!-- Form Panel -->
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <!-- Title -->
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                            </div>
+                            <!-- Login Form -->
+                            <form class="user" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <!-- Username -->
+                                    {{ form.username.label_tag }}
+                                    {{ form.username|add_class:"form-control form-control-user" }}
+                                </div>
+                                <div class="form-group">
+                                    <!-- Password -->
+                                    {{ form.password.label_tag }}
+                                    {{ form.password|add_class:"form-control form-control-user" }}
+                                </div>
+                                <!-- Submit Button -->
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    Login
+                                </button>
+                                <hr>
+                                <!-- Social Buttons -->
+                                <a href="#" class="btn btn-google btn-user btn-block">
+                                    <i class="fab fa-google fa-fw"></i> Login with Google
+                                </a>
+                                <a href="#" class="btn btn-facebook btn-user btn-block">
+                                    <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                </a>
+                            </form>
+                            <hr>
+                            <!-- Links -->
+                            <div class="text-center">
+{#                                <a class="small" href="{% url 'password_reset' %}">Forgot Password?</a>#}
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="{% url 'register' %}">Create an Account!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </form>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-            Does not have an account? <a class="ml-2" href="{% url 'register' %}">Sign Up</a>
-        </small>
     </div>
-</div>
 {% endblock content %}

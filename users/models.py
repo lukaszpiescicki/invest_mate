@@ -8,15 +8,20 @@ from workbooks.models import Workbook
 
 class CustomUser(AbstractUser):
     email = models.EmailField()
-    workbook = models.ForeignKey(Workbook, on_delete=models.CASCADE)
-    wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
+    workbook = models.OneToOneField(
+        Workbook, on_delete=models.CASCADE, blank=True, null=True
+    )
+    wallet = models.OneToOneField(
+        Wallet, on_delete=models.CASCADE, blank=True, null=True
+    )
 
     def save(self, *args, **kwargs):
-        if not self.workbook:
+        if self.workbook is None:
             workbook = Workbook.objects.create(name=f"{self.first_name}'s Workbook")
             self.workbook = workbook
-        if not self.wallet:
+            super().save(*args, **kwargs)
+
+        if self.wallet is None:
             wallet = Wallet.objects.create(balance=0.00)
             self.wallet = wallet
-
-        super().save(*args, **kwargs)
+            super().save(*args, **kwargs)

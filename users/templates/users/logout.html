@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Logged Out{% endblock %}
+
+{% block content %}
+    <!-- Logout Confirmation -->
+    <div class="row justify-content-center">
+        <div class="col-xl-10 col-lg-12 col-md-9">
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-6 d-none d-lg-block bg-logout-image"></div>
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">You have been logged out!</h1>
+                                </div>
+                                <div class="text-center mb-4">
+                                    <p class="text-gray-600">Thank you for using our application.</p>
+                                    <p class="text-gray-600">Your session has been ended successfully.</p>
+                                </div>
+                                <div class="text-center">
+                                    <a href="{% url 'login' %}" class="btn btn-primary btn-user btn-block">
+                                        <i class="fas fa-sign-in-alt fa-fw"></i> Login Again
+                                    </a>
+                                </div>
+                                <hr>
+                                <div class="text-center">
+                                    <a class="small" href="{% url 'password_reset' %}">Forgot Password?</a>
+                                </div>
+                                <div class="text-center">
+                                    <a class="small" href="{% url 'register' %}">Create an Account!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <style>
+        .bg-logout-image {
+            background: url("{% static 'blog/img/logout-image.jpg' %}");
+            background-position: center;
+            background-size: cover;
+        }
+
+        /* In case the image is not available, use a gradient as fallback */
+        @media (max-width: 767.98px) {
+            .bg-logout-image {
+                background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+            }
+        }
+    </style>
+{% endblock %}

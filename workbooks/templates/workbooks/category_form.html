@@ -1,0 +1,25 @@
+{% extends 'base.html' %}  {# Ensure this extends SB Admin 2's base template #}
+{% block content %}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">Create New Category</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="id_text">Category Name</label>
+                    <input type="text" name="text" id="id_text" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create Category</button>
+                <a href="{% url 'category-list' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

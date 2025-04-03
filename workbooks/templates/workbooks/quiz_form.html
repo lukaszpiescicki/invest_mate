@@ -2,7 +2,6 @@
 {% block content %}
 
 <div class="container-fluid">
-    <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">Create New Quiz</h1>
 
     <div class="card shadow mb-4">
@@ -19,16 +18,7 @@
                     <label for="id_question">Question</label>
                     <select name="question" id="id_question" class="form-control">
                         {% for question in questions %}
-                        <option value="{{ question.id }}">{{ question.text }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="id_answer">Answer</label>
-                    <select name="answer" id="id_answer" class="form-control">
-                        {% for answer in answers %}
-                        <option value="{{ answer.id }}">{{ answer.text }}</option>
+                            <option value="{{ question.id }}">{{ question.text }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -37,22 +27,13 @@
                     <label for="id_category">Category</label>
                     <select name="category" id="id_category" class="form-control">
                         {% for category in categories %}
-                        <option value="{{ category.id }}">{{ category.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="id_author">Author</label>
-                    <select name="author" id="id_author" class="form-control">
-                        {% for user in users %}
-                        <option value="{{ user.id }}">{{ user.username }}</option>
+                            <option value="{{ category.id }}">{{ category.text }}</option>
                         {% endfor %}
                     </select>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Create Quiz</button>
-                <a href="{% url 'quiz_list' %}" class="btn btn-secondary">Cancel</a>
+                <a href="{% url 'quiz-list' %}" class="btn btn-secondary">Cancel</a>
             </form>
         </div>
     </div>
