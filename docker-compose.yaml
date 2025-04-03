@@ -35,6 +35,19 @@ services:
     ports:
       - "6379:6379"
 
+  flower:
+    build: .
+    command: ./start_flower.sh
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    ports:
+      - 5557:5555
+    depends_on:
+      - redis
+      - invest-mate-db
+
   invest-mate-db:
     image: postgres:17
     container_name: invest-mate-db
