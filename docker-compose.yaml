@@ -44,6 +44,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
       POSTGRES_PASSWORD: postgres
+      PGUSER: postgres
     env_file:
       - .env
     volumes:
