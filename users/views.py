@@ -31,6 +31,8 @@ class UserRegisterView(FormView):
         user.is_active = False
         user.first_name = form.cleaned_data.get("first_name")
         user.last_name = form.cleaned_data.get("last_name")
+        password = form.cleaned_data.get("password1")
+        user.set_password(password)
         user.save()
         current_site = get_current_site(self.request)
         mail_subject = "Activation link has been sent to your email id"
