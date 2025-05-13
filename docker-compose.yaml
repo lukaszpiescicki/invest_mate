@@ -34,7 +34,6 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
-
   flower:
     build: .
     command: ./start_flower.sh
@@ -52,7 +51,7 @@ services:
     image: postgres:17
     container_name: invest-mate-db
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
