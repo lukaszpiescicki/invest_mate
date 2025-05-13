@@ -1,24 +1,81 @@
 {% extends 'base.html' %}
+{% load quiz_filters %}
 {% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Quiz: {{ quiz.title }}</h1>
 
-    <div class="container-fluid">
-        <h1 class="h3 mb-4 text-gray-800">Workbook Details</h1>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Category: {{ quiz.category }}</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" action="{% url 'quiz-submit' quiz.id %}">
+                {% csrf_token %}
 
-        <div class="card shadow mb-4">
-            <div class="card-body">
-                <h5><strong>User:</strong> {{ workbook.user.username }}</h5>
+                {% for question in quiz.question.all %}
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">{{ forloop.counter }}. {{ question.text }}</h5>
+                    </div>
+                    <div class="card-body">
+                        {% for answer in question_answers|get_item:question.id %}
+                        <div class="custom-control custom-radio mb-2">
+                            <input type="radio" id="answer-{{ question.id }}-{{ answer.id }}"
+                                name="question-{{ question.id }}" value="{{ answer.id }}"
+                                class="custom-control-input" required>
+                            <label class="custom-control-label" for="answer-{{ question.id }}-{{ answer.id }}">
+                                {{ answer.text }}
+                            </label>
+                        </div>
+                        {% empty %}
+                        <p class="text-muted">No answers available for this question.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="alert alert-info">
+                    No questions are available in this quiz.
+                </div>
+                {% endfor %}
 
-                <h5 class="mt-3"><strong>Quizzes:</strong></h5>
-                <ul class="list-group mb-3">
-                    {% for quiz in workbook.quizzes.all %}
-                        <li class="list-group-item">{{ quiz.title }}</li>
-                    {% empty %}
-                        <li class="list-group-item text-muted">No quizzes assigned</li>
-                    {% endfor %}
-                </ul>
-            </div>
+                {% if quiz.question.all %}
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">Submit Answers</button>
+                </div>
+                {% endif %}
+            </form>
         </div>
 
-    </div>
+        {% if quiz_results %}
+        <div class="card-footer">
+            <div class="result-section p-3">
+                <h4 class="mb-3">Quiz Results</h4>
+                <div class="alert {% if score_percentage >= 70 %}alert-success{% else %}alert-danger{% endif %}">
+                    <h5>Your Score: {{ correct_answers }}/{{ total_questions }} ({{ score_percentage }}%)</h5>
+                </div>
 
+                <div class="question-results mt-4">
+                    {% for result in question_results %}
+                    <div class="card mb-3 {% if result.is_correct %}border-success{% else %}border-danger{% endif %}">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ result.question_text }}</h6>
+                            <p class="card-text">
+                                Your answer: {{ result.user_answer_text }}
+                                {% if result.is_correct %}
+                                <span class="text-success"><i class="fas fa-check-circle"></i> Correct</span>
+                                {% else %}
+                                <span class="text-danger"><i class="fas fa-times-circle"></i> Incorrect</span>
+                                <br>
+                                <small class="text-muted">Correct answer: {{ result.correct_answer_text }}</small>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
