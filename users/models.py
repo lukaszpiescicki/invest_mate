@@ -19,9 +19,9 @@ class CustomUser(AbstractUser):
         if self.workbook is None:
             workbook = Workbook.objects.create(name=f"{self.first_name}'s Workbook")
             self.workbook = workbook
-            super().save(*args, **kwargs)
 
         if self.wallet is None:
             wallet = Wallet.objects.create(balance=0.00)
             self.wallet = wallet
-            super().save(*args, **kwargs)
+
+        return super(CustomUser, self).save(*args, **kwargs)
